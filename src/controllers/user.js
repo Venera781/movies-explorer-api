@@ -53,11 +53,22 @@ export const createUser = async (req, res, next) => {
       email,
       password: hash,
     });
-    res.status(StatusCodes.CREATED).send({
-      name: newUser.name,
-      email: newUser.email,
-      id: newUser._id,
+    const token = jwt.sign({ _id: newUser._id }, JWT_SECRET, {
+      expiresIn: JWT_EXPIRES,
     });
+    res
+      .status(StatusCodes.CREATED)
+      .cookie(JWT_COOKIE_NAME, token, {
+        maxAge: JWT_COOKIE_AGE,
+        httpOnly: true,
+        sameSite: 'None',
+        secure: true,
+      })
+      .send({
+        name: newUser.name,
+        email: newUser.email,
+        id: newUser._id,
+      });
   } catch (err) {
     next(err);
   }
@@ -84,9 +95,14 @@ export const login = async (req, res, next) => {
       .cookie(JWT_COOKIE_NAME, token, {
         maxAge: JWT_COOKIE_AGE,
         httpOnly: true,
-        sameSite: true,
+        sameSite: 'None',
+        secure: true,
       })
-      .send();
+      .send({
+        name: userInDb.name,
+        email: userInDb.email,
+        id: userInDb._id,
+      });
   } catch (err) {
     next(err);
   }
@@ -98,7 +114,8 @@ export const signOut = (req, res) => {
     .status(StatusCodes.OK)
     .clearCookie(JWT_COOKIE_NAME, {
       httpOnly: true,
-      sameSite: true,
+      sameSite: 'None',
+      secure: true,
     })
     .send();
 };

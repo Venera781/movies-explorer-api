@@ -12,7 +12,7 @@ export const JWT_COOKIE_NAME = process.env.JWT_COOKIE_NAME ?? 'jwt';
 export const JWT_COOKIE_AGE =
   process.env.JWT_COOKIE_AGE ?? 7 * 24 * 3600 * 1000;
 
-export const PORT = process.env.PORT ?? 3000;
+export const PORT = process.env.PORT ?? 4000;
 export const DB_URL =
   process.env.NODE_ENV === 'production'
     ? process.env.DB_URL

@@ -32,6 +32,7 @@ export const createMovie = async (req, res, next) => {
       thumbnail,
       movieId,
     } = req.body;
+    
     const movie = await Movie.create({
       country,
       director,
