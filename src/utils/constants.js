@@ -1,7 +1,7 @@
 const optionsCORS = {
   origin: [
     'http://localhost:3000',
-    'https://mv781mestofront.nomoredomainsmonster.ru',
+    'https://movie-m781.nomoredomainsmonster.ru'
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
