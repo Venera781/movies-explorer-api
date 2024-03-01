@@ -33,7 +33,11 @@ const updateUserData = async (res, next, getUserData) => {
       new: true,
       runValidators: true,
     }).orFail(() => new NotFoundError('user'));
-    res.status(StatusCodes.OK).send(updatedUser);
+    res.status(StatusCodes.OK).send({
+      id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+    });
   } catch (err) {
     next(err);
   }
